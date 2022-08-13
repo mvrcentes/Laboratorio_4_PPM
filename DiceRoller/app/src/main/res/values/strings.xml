@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Dice Roller</string>
+    <string name="pedir_lados">Numero de lados</string>
+    <string name="tirar">Tirar</string>
+    <string name="dado">dado</string>
+    <string name="imageView">imageView</string>
+</resources>
