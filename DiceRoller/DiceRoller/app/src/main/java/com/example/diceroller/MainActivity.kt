@@ -1,52 +1,50 @@
 package com.example.diceroller
 
 import android.os.Bundle
-import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity() {
-    val imageView : ImageView? = null;
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sides: EditText = findViewById(R.id.editTextNumber)
+
+        val rollButton: Button = findViewById(R.id.button)
+        rollButton.setOnClickListener { rollDice(sides.text.toString().toInt()) }
+        // Do a dice roll when the app starts
+        rollDice(6)
     }
 
-    fun girar(view: View){
-        
-        val lados = findViewById<EditText>(R.id.editTextNumber)
-        val dado = Dice(Integer.parseInt(lados.getText().toString()))
+    /**
+     * Roll the dice and update the screen with the result.
+     */
+    private fun rollDice(int: Int) {
+        // Create new Dice object with 6 sides and roll the dice
+        val dice = Dice(int)
+        val diceRoll = dice.roll()
 
-//        val img =  findViewById(R.id.imageView)
+        // Find the ImageView in the layout
+        val diceImage: ImageView = findViewById(R.id.imageView)
 
-        println("lados:\t ${lados.getText()}")
-        imageView?.setImageResource(R.drawable.dado_2);
-
-        if(dado.roll() == 1){
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado);
-        }else if(dado.roll() == 2){
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado_2);
-        }else if(dado.roll() == 2){
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado_3);
-        }else if(dado.roll() == 3){
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado_4);
-        }else if(dado.roll() == 4){
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado_5);
-        }else if(dado.roll() == 5){
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado_6);
-        }else {
-            println("lados:\t ${dado.roll()}")
-            imageView?.setImageResource(R.drawable.dado_infinito);
+        // Determine which drawable resource ID to use based on the dice roll
+        val drawableResource = when (diceRoll) {
+            1 -> R.drawable.dado
+            2 -> R.drawable.dado_2
+            3 -> R.drawable.dado_3
+            4 -> R.drawable.dado_4
+            5 -> R.drawable.dado_5
+            6 -> R.drawable.dado_6
+            else -> R.drawable.dado_infinito
         }
+
+        // Update the ImageView with the correct drawable resource ID
+        diceImage.setImageResource(drawableResource)
+
+        // Update the content description
+        diceImage.contentDescription = diceRoll.toString()
     }
 }

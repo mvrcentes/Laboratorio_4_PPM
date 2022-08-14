@@ -4,4 +4,6 @@
     <string name="tirar">Tirar</string>
     <string name="dado">dado</string>
     <string name="imageView">imageView</string>
+    <string name="todo">TODO</string>
+    <string name="roll">Roll</string>
 </resources>
